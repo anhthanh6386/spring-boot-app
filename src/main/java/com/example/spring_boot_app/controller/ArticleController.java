@@ -54,4 +54,17 @@ public class ArticleController {
         logger.info("Article deleted");
     }
 
+    @PutMapping(value = "/posts/{id}")
+    public ArticleDTO updateArticle(@PathVariable Long id, @RequestBody ArticleDTO articleDTO) {
+        logger.info("Update article with id: {}", id);
+        Article article = new Article();
+        BeanUtils.copyProperties(articleDTO, article, "id");
+        Article updatedArticle = articleService.updateArticle(id, article);
+        
+        ArticleDTO updatedArticleDTO = new ArticleDTO();
+        EntityToDtoConverter.convertEntityToDto(updatedArticle, updatedArticleDTO);
+        logger.info("Article updated");
+        return updatedArticleDTO;
+    }
+
 }
