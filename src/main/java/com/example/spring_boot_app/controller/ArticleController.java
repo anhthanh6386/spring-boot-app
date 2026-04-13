@@ -67,4 +67,14 @@ public class ArticleController {
         return updatedArticleDTO;
     }
 
+    @GetMapping(value = "/posts/{id}")
+    public ArticleDTO getArticleById(@PathVariable Long id) {
+        logger.info("Get article with id: {}", id);
+        Article article = articleService.getArticleById(id)
+                .orElseThrow(() -> new RuntimeException("Article not found with id " + id));
+        ArticleDTO articleDTO = new ArticleDTO();
+        EntityToDtoConverter.convertEntityToDto(article, articleDTO);
+        return articleDTO;
+    }
+
 }
