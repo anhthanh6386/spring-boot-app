@@ -47,4 +47,11 @@ public class ArticleController {
         return articleDTOs;
     }
 
+    @DeleteMapping(value = "/posts/{id}")
+    public void deleteArticle(@PathVariable Long id) {
+        logger.info("Delete article with id: {}", id);
+        articleService.deleteArticle(id);
+        logger.info("Article deleted");
+    }
+
 }
